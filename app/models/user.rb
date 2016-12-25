@@ -6,15 +6,20 @@ class User < ActiveRecord::Base
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
   has_secure_password
-  
+
   has_many :following_relationships, class_name:  "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :following_users, through: :following_relationships, source: :followed
   has_many :followed_relationships, class_name:  "Relationship", foreign_key: "followed_id", dependent: :destroy
   has_many :followed_users, through: :followed_relationships, source: :follower
 
-  has_many :ownerships , foreign_key: "user_id", dependent: :destroy
-  has_many :items ,through: :ownerships
+  has_many :ownerships, foreign_key: "user_id", dependent: :destroy
+  has_many :items, through: :ownerships
 
+  has_many :wants, class_name: "Want", foreign_key: "user_id", dependent: :destroy
+  has_many :want_items, through: :wants, source: :item
+
+  has_many :haves, class_name: "Have", foreign_key: "user_id", dependent: :destroy
+  has_many :have_items, through: :haves, source: :item
 
   # 他のユーザーをフォローする
   def follow(other_user)
