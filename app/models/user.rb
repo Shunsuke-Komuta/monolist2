@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
   end
 
   def unhave(item)
-    haves.find_by(item_id: item.id).destroy if have?
+    haves.find_by(item_id: item.id).destroy if have?(item)
   end
 
   def have?(item)
@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
   end
 
   def unwant(item)
-    wants.find_by(item_id: item.id).destroy if want?
+    wants.find_by(item_id: item.id).destroy if want?(item)
   end
 
   def want?(item)
