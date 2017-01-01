@@ -24,10 +24,13 @@ class OwnershipsController < ApplicationController
       @item.save!
     end
 
-    # TODO ユーザにwant or haveを設定する
-    # params[:type]の値にHaveボタンが押された時には「Have」,
-    # Wantボタンが押された時には「Want」が設定されています。
-    
+    user = User.find_by(id: session[:user_id])
+    case params[:type]
+    when 'Have'
+      user.have(@item)
+    when 'Want'
+      user.want(@item)
+    end
 
   end
 

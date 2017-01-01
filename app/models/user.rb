@@ -34,9 +34,8 @@ class User < ActiveRecord::Base
     following_users.include?(other_user)
   end
 
-  ## TODO 実装
   def have(item)
-    haves.create(item_id: item.id)
+    haves.create(item_id: item.id) unless have?(item)
   end
 
   def unhave(item)
@@ -44,11 +43,11 @@ class User < ActiveRecord::Base
   end
 
   def have?(item)
-    haves.find_by(item_id: item.id).present
+    haves.find_by(item_id: item.id).present?
   end
 
   def want(item)
-    wants.create(item_id: item.id)
+    wants.create(item_id: item.id) unless want?(item)
   end
 
   def unwant(item)
@@ -56,6 +55,6 @@ class User < ActiveRecord::Base
   end
 
   def want?(item)
-    wants.find_by(item_id: item.id).present
+    wants.find_by(item_id: item.id).present?
   end
 end
