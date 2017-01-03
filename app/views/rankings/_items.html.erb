@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="container-inner inner-default clearfix">
+    <% items.each.with_index(1) do | item, index | %>
+      <div class="item-box">
+        <h2><%= index %>位</h2>
+        <div class="item-box">
+          <div class="image">
+            <div class="img-wrap">
+              <%= image_tag(item.large_image , alt: item.title) %>
+            </div>
+          </div>
+          <div class="detail">
+            <p class="title">
+              <%= link_to item.title , item.detail_page_url %>
+            </p>
+          </div>
+          <div class="action clearfix">
+            <%= link_to "" , ownerships_path(item_code: item['itemCode'] , type: "Want") ,
+                        :class => "btn-want btn btn-danger btn-sm want",
+                        :item_code => "want-#{item['itemCode']}",
+                        :remote => true,
+                        :method => :post %>
+            <%= link_to "" , ownerships_path(item_code: item['itemCode'] , type: "Have") ,
+                        :class => "btn-have btn btn-warning btn-sm have",
+                        :item_code => "have-#{item['itemCode']}",
+                        :remote => true,
+                        :method => :post %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
